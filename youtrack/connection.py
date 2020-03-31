@@ -6,7 +6,8 @@ import re
 import sys
 import tempfile
 import time
-import urllib.request, urllib.parse, urllib.error
+import six.moves.urllib as urllib
+
 from xml.dom import Node
 from xml.dom import minidom
 from xml.sax.saxutils import escape, quoteattr
@@ -99,7 +100,7 @@ class Connection(object):
                 #    body = re.sub(self.__get_illegal_xml_chars_re(), b'', body)
 
                 headers['Content-Type'] = content_type
-                headers['Content-Length'] = len(body)
+                headers['Content-Length'] = "%s" % len(body)
         elif method == 'GET' and content_type is not None:
             headers = headers.copy()
             headers['Accept'] = content_type
